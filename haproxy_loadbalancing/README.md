@@ -33,3 +33,20 @@ docker run -p 5555:8888 -d -e APPID=5555 nodeapp
 ```
 haproxy -f test.cfg
 ```
+
+### If you have to run this local host with your public IP address,
+
+- Do a port forwarding from your router
+- Go to noip.com and setup a free domain to test ha-proxy load balancing using domain name.
+
+### Enable HTTPS HAProxy
+
+```
+brew install letsencrypt
+``` 
+
+-- To generate certificate
+
+```
+sudo certbot certonly --standalone
+```
