@@ -88,3 +88,38 @@ INSERT INTO tlp_lab.tombstones (fruit, date, crates) VALUES ('pickles', '2016061
 ```
 
 ### Counters Demo
+- Creating a table that includes a counter.
+```
+CREATE TABLE ratings (
+    course_id varchar PRIMARY KEY,
+    ratings_count counter,
+    ratings_total counter
+) with comment = 'A table of course ratings';
+```
+- Incrementing the counter
+```
+UPDATE ratings set ratings_count = ratings_count +1, ratings_total = ratings_total + 4 WHERE course_id = 'advanced-python';  -- As we know this will perform upsert.
+```
+
+### Aggregation in Cassandra.
+```
+CREATE TABLE ratings (
+    course_id varchar,
+    user_id varchar,
+    rating float,
+    primary key(course_id, user_id)
+) with comment = 'A table of course ratings';
+
+INSERT INTO ratings (course_id , user_id , rating ) VALUES ( 'cassandra_developers', 'user1', 4);
+INSERT INTO ratings (course_id , user_id , rating ) VALUES ( 'cassandra_developers', 'user2', 5);
+INSERT INTO ratings (course_id , user_id , rating ) VALUES ( 'cassandra_developers', 'user3', 2);
+INSERT INTO ratings (course_id , user_id , rating ) VALUES ( 'advanced-python', 'user3', 2);
+
+### Average rating for Course.
+SELECT course_id, avg(rating) from ratings where course_id = 'cassandra_developers';
+
+### Aggregate function behave weirdly when used without partition key.
+SELECT course_id, avg(rating) from ratings ;
+Warnings :
+Aggregation query used without partition key
+```
