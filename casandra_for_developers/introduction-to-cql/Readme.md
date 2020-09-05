@@ -62,4 +62,29 @@ cat scripts/courses.cql | docker-compose exec -T n1 cqlsh
 Select * from pluralsight.courses;
 
 ### Now Expanded output is enabled
+
+Select id, token(id) from courses; // Returns the token value associated with the partition key
+
+cat scripts/users.cql | docker-compose exec -T n1 cqlsh
+
+## There is always an upsert going on if update statement doesn't match with anything else it will create the record else update it.
+
+Assume we want to implement a functionality on our website for resetting a lost password, As a part of this process we likely want to generate a token to send as part of password reset URL.
+
+UPDATE users USING TTL 120 SET reset_token = 'abc12kye' where id = 'jane-doe'; // Token will automatically expire(set to null) after 2 minutes.
+
 ```
+
+### Deletes in Cassandra (Tombstone under the hood)
+
+```
+CREATE KEYSPACE tlp_lab WITH replication = {'class': 'NetworkTopologyStrategy', 'datacenter1' : 3};
+CREATE TABLE tlp_lab.tombstones (fruit text, date text, crates set<int>, PRIMARY KEY (fruit, date));
+
+## Let's insert some data
+INSERT INTO tlp_lab.tombstones (fruit, date, crates) VALUES ('apple', '20160616', {1,2,3,4,5});
+INSERT INTO tlp_lab.tombstones (fruit, date, crates) VALUES ('apple', '20160617', {1,2,3});
+INSERT INTO tlp_lab.tombstones (fruit, date, crates) VALUES ('pickles', '20160616', {6,7,8}) USING TTL 2592000;
+```
+
+### Counters Demo
