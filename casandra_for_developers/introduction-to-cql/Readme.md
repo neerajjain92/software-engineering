@@ -1,5 +1,4 @@
-- Commands
-
+## Introduction to CQL
 ```
 CREATE KEYSPACE pluralsight WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1}
 CREATE TABLE courses (id varchar primary key);
