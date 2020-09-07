@@ -1,0 +1,15 @@
+{
+  "name": "apache-kafka-crash-course",
+  "version": "1.0.0",
+  "description": "Table of Contents : - Kafka Components - Example:     - Spin up Kafka Cluster     - Spin up Zookeeper     - Write nodeJs Producer/Consumer - Pros and Cons of Kafka - Summary",
+  "main": "topic.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "kafkajs": "^1.12.0"
+  }
+}
