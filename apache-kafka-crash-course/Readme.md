@@ -30,3 +30,10 @@ docker inspect {CONTAINER_ID}
 ```
 docker run --name kafka -p 9092:9092 -e KAFKA_ZOOKEEPER_CONNECT=172.25.0.2:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 --net isolated_network confluentinc/cp-kafka
 ```
+
+4. Run topic.js to create topics with desired partitions
+```
+node topic.js
+```
+
+5. Now you can run your producer and consumer respectively.

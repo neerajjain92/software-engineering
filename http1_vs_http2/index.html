@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .image-parts {
+            display: grid;
+            grid-column-gap: 1px;
+            grid-row-gap: 1px;
+            grid-template-columns:
+                1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            width: 1472px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Running over http1.1</h1>
+    <h3>Page Load Time <span id="loadTime"></span></h4>
+    <div class="image-parts">
+        <table id='img' border=0 cellpadding=1 cellspacing=0></table>
+    </div>
+</body>
+
+<script>
+    const table = document.getElementById('img');
+    for (let row = 0; row <= 31; row++) {
+        const tr = document.createElement("tr");
+        for (let col = 0; col <= 31; col++) {
+            const td = document.createElement("td");
+            const img = document.createElement("img");
+            img.src = `images/lucee_tomcat_setup-${row}-${col}.png`;
+            td.append(img);
+            tr.append(td);
+        }
+        table.appendChild(tr);
+    }
+
+    window.onload = function() {
+        var loadTime = window.performance.timing.domContentLoadedEventEnd- window.performance.timing.navigationStart;
+        document.getElementById("loadTime").innerHTML = loadTime + "ms" + " and " + (loadTime/1000) + "sec";
+    }
+</script>
+
+</html>
