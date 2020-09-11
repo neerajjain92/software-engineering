@@ -1,3 +1,5 @@
+![](game-demo.gif)
+
 ## Agenda
 
 - Connect to Server
@@ -60,5 +62,3 @@ joinGame(Z) | returnGame State (Since there are no other clients in the Game)
 --   | --
 joinGame(Z) | JSON(method: "join", game: {clients: [{B, Red}, {C, Green}]})
 
-
-![](game-demo.gif)
