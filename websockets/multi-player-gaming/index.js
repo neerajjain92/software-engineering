@@ -116,17 +116,17 @@ function joinGame(result) {
   const clientId = result.clientId;
   const gameId = result.gameId;
   const game = games[gameId];
-  if (game.clients.length >= 3) {
+  if (game.clients.length >= 4) {
     // Sorry Max Player reached
     return;
   }
-  const color = { 0: "Red", 1: "Green", 2: "Blue" }[game.clients.length];
+  const color = { 0: "Red", 1: "Green", 2: "Blue", "3": "Yellow" }[game.clients.length];
   game.clients.push({
     clientId: clientId,
     color: color,
   });
 
-  if (game.clients.length === 3) {
+  if (game.clients.length === 4) {
     updateGameState();
   }
 
