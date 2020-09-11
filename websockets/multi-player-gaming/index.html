@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi Player Game</title>
+</head>
+
+<body>
+    <h1>Ball Game</h1>
+    <button id='btnCreate'> New Game</button><br />
+    Game Id to join : <input type="text" id="gameIdInput" style="width: 300px;" /> <button id='btnJoin'>Join
+        Game</button>
+
+    <div id='divPlayers'></div>
+    <div id='divBoard'></div>
+
+    <script>
+        // Setup a WebSocket
+
+        let ws = new WebSocket("ws://localhost:9090");
+        let clientId = null;
+        let gameId = null;
+        let playerColor = null;
+
+        // HTML ELEMENTS
+        const btnCreate = document.getElementById('btnCreate');
+        const btnJoin = document.getElementById('btnJoin');
+        let gameIdInput = document.getElementById('gameIdInput');
+        const divPlayers = document.getElementById('divPlayers');
+        const divBoard = document.getElementById('divBoard');
+
+        // Wiring Events
+        btnCreate.addEventListener("click", e => {
+            const payload = {
+                "method": "createGame",
+                "clientId": clientId
+            }
+
+            ws.send(JSON.stringify(payload));
+        });
+
+        btnJoin.addEventListener("click", e => {
+            gameIdInput = document.getElementById('gameIdInput');
+            gameId = (gameId === null) ? gameIdInput.value : gameId;
+            if (!gameId) {
+                alert("Game Id can't be empty....");
+                return;
+            }
+            console.log("Game id to join :  ", gameId);
+            const payload = {
+                "method": "joinGame",
+                "clientId": clientId,
+                "gameId": gameId
+            }
+            ws.send(JSON.stringify(payload));
+        });
+
+
+        ws.onmessage = message => {
+            // message.data
+            const response = JSON.parse(message.data);
+            console.log(response);
+
+            // Connect
+            if (response.method === "connect") {
+                clientId = response.clientId;
+                console.log("Client Id Set Successfully : ", clientId);
+            } else if (response.method === "create") {
+                gameId = response.game.id;
+                gameIdInput.value = gameId;
+                console.log("Game Successfully created with id " + response.game.id + " with " + response.game.balls + " balls.");
+            } else if (response.method === 'join') {
+                const game = response.game;
+
+                while (divPlayers.firstChild) {
+                    divPlayers.removeChild(divPlayers.firstChild)
+                }
+
+                game.clients.forEach(c => {
+                    if (c.clientId === clientId) {
+                        playerColor = c.color;
+                    }
+                    const d = document.createElement("div");
+                    d.style.width = "200px";
+                    d.style.background = c.color;
+                    d.textContent = c.clientId;
+                    divPlayers.appendChild(d);
+                })
+
+                // Create Game Board
+
+                while (divBoard.firstChild) {
+                    divBoard.removeChild(divBoard.firstChild);
+                }
+
+                for (let i = 0; i < game.balls; i++) {
+                    const btn = document.createElement("button")
+                    btn.id = "ball" + (i + 1);
+                    btn.style.width = "150px";
+                    btn.style.height = "150px";
+                    btn.textContent = i + 1;
+                    btn.tag = i + 1;
+                    btn.addEventListener("click", e => {
+                        // Override the color   
+                        // and send this even 
+                        btn.style.background = playerColor;
+
+                        const payload = {
+                            "method": "play",
+                            "clientId": clientId,
+                            "gameId": gameId,
+                            "ballId": btn.tag,
+                            "color": playerColor
+                        }
+                        ws.send(JSON.stringify(payload));
+                    });
+                    divBoard.appendChild(btn);
+                }
+            }
+
+            else if (response.method === "update") {
+
+                // Response will be like
+                // {1: "red", 2: "blue"} etc.
+                for(const b of Object.keys(response.game.state)) {
+                    const color = response.game.state[b]; // Server state
+
+                    // Get that ball from our current board
+                    const ballObject = document.getElementById("ball" + b);
+                    
+                    // Update the respective color
+                    ballObject.style.background = color;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
