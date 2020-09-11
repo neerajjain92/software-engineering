@@ -1,0 +1,8 @@
+{
+  "name": "Multi Player WebSocket Ball Game",
+  "description": ""Multi Player WebSocket Ball Game",
+  "repository": "https://github.com/neerajjain92/software-engineering/tree/master/websockets/multi-player-gaming",
+  "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/main/public/node.svg",
+  "keywords": ["node", "express", "heroku", "websockets"],
+  "image": "heroku/nodejs"
+}
