@@ -49,4 +49,8 @@ brew install letsencrypt
 
 ```
 sudo certbot certonly --standalone
+
+// Now take these 2 files merge them and put in one file 
+
+ sudo cat /etc/letsencrypt/live/YOUR_DOMAIN/fullchain.pem /etc/letsencrypt/live/YOUR_DOMAIN/privkey.pem | sudo tee /Users/neeraj/proxy/haproxy.pem
 ```
