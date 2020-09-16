@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleLocalSettings">
+    <option name="projectSyncType">
+      <map>
+        <entry key="$USER_HOME$/Desktop/building-java-libraries" value="PREVIEW" />
+        <entry key="$USER_HOME$/Downloads/ElasticSearchDemo" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/github/neerajjain92/RedisPlayground" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/github/neerajjain92/elasticsearch" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/office/MatchService" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/office/SalesPlatform/common-app-support" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/office/SalesPlatform/sales-platform" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/office/SalesPlatform/slp-app-support-logger-api" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/office/SalesPlatform/slp-core-modules" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/office/mdm-match-service" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/office/sales-platform" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/office/sample-java-gradle-springboot-app" value="PREVIEW" />
+        <entry key="$USER_HOME$/Projects/office/slp-core-modules" value="PREVIEW" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State />
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Android</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+</project>
