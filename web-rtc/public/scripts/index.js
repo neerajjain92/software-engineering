@@ -69,7 +69,7 @@ async function callUser(socketId) {
 
 // Make a WebSocket Connection
 
-const socket = io.connect("localhost:5000");
+const socket = io.connect("192.168.1.7:5000");
 let isAlreadyCalling = false;
 
 // Whenever a new user-joins we receive this call
@@ -125,23 +125,20 @@ function toggleVideoCamera() {
     document.getElementById("camera-off").style.display = "block";
     document.getElementById("video-control").src = "./img/video-camera.png";
     this.mediaStream.getTracks().forEach((track) => {
-      if(track.readyState === 'live' && track.kind === 'video') {
+      if (track.readyState === "live" && track.kind === "video") {
         track.enabled = false;
       }
     });
   } else {
     this.mediaStream.getTracks().forEach((track) => {
-      if(track.readyState === 'ended' && track.kind === 'video') {
+      if (track.readyState === "live" && track.kind === "video") {
         track.enabled = true;
       }
     });
-
     document.getElementById("camera-off").style.display = "none";
     document.getElementById("video-control").src =
       "./img/video-camera-hide.png";
   }
-  this.mediaStream.getVideoTracks()[0].enabled = !this.mediaStream.getVideoTracks()[0]
-    .enabled;
 }
 
 function toggleAudio() {
@@ -156,22 +153,26 @@ function toggleAudio() {
   }
 }
 
-navigator.getUserMedia(
-  { video: true, audio: true },
-  (stream) => {
-    const localVideo = document.getElementById("local-video");
-    if (localVideo) {
-      localVideo.srcObject = stream;
+function getUserMedia() {
+  navigator.getUserMedia(
+    { video: true, audio: true },
+    (stream) => {
+      const localVideo = document.getElementById("local-video");
+      if (localVideo) {
+        localVideo.srcObject = stream;
+      }
+
+      // Add Local Audio and Video tracks to the Peer Connection...
+      stream
+        .getTracks()
+        .forEach((track) => peerConnection.addTrack(track, stream));
+
+      this.mediaStream = stream;
+    },
+    (error) => {
+      console.warn(error.message);
     }
+  );
+}
 
-    // Add Local Audio and Video tracks to the Peer Connection...
-    stream
-      .getTracks()
-      .forEach((track) => peerConnection.addTrack(track, stream));
-
-    this.mediaStream = stream;
-  },
-  (error) => {
-    console.warn(error.message);
-  }
-);
+getUserMedia(); // Get the user media 
